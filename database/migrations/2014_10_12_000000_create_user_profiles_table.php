@@ -16,10 +16,10 @@ class CreateUserProfilesTable extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('city_id');
-            $table->unsignedInteger('country_id');
-            $table->unsignedInteger('fac_id');
-            $table->unsignedInteger('uni_id');
+            $table->unsignedInteger('city_id')->nullable();
+            $table->unsignedInteger('country_id')->nullable();
+            $table->unsignedInteger('fac_id')->nullable();
+            $table->unsignedInteger('uni_id')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('city_id')->references('id')->on('cities');
