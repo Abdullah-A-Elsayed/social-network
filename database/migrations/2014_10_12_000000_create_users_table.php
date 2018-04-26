@@ -20,17 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             //my additions:
-            $table->string('phone',30)->unique();
+            $table->unsignedInteger('type');
             $table->unsignedInteger('status');
-            $table->unsignedInteger('city_id');
-            $table->unsignedInteger('country_id');
-            $table->unsignedInteger('fac_id');
-            $table->unsignedInteger('uni_id');
-
-            $table->foreign('city_id')->references('id')->on('cities');
-            $table->foreign('country_id')->references('id')->on('countries');
-            $table->foreign('fac_id')->references('id')->on('facs');
-            $table->foreign('uni_id')->references('id')->on('unis');
+            $table->string('phone',30)->unique();
             $table->timestamps();
         });
          Schema::enableForeignKeyConstraints();

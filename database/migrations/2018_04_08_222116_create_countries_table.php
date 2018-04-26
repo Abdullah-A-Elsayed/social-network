@@ -16,8 +16,6 @@ class CreateCountriesTable extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('contenent_id');
-            $table->foreign('contenent_id')->references('id')->on('contenents');
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();
