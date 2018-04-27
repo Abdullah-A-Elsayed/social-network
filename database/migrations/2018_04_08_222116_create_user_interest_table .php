@@ -17,8 +17,8 @@ class CreateUserInterestTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('interest_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('interest_id')->references('id')->on('interests');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('interest_id')->references('id')->on('interests')->onDelete('restrict');
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

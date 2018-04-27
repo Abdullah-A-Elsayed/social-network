@@ -21,11 +21,12 @@ class CreateUserProfilesTable extends Migration
             $table->unsignedInteger('fac_id')->nullable();
             $table->unsignedInteger('uni_id')->nullable();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('city_id')->references('id')->on('cities');
-            $table->foreign('country_id')->references('id')->on('countries');
-            $table->foreign('fac_id')->references('id')->on('facs');
-            $table->foreign('uni_id')->references('id')->on('unis');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('restrict');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('restrict');
+            $table->foreign('fac_id')->references('id')->on('facs')->onDelete('restrict');
+            $table->foreign('uni_id')->references('id')->on('unis')->onDelete('restrict');
             $table->timestamps();
         });
          Schema::enableForeignKeyConstraints();

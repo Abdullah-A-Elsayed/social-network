@@ -17,7 +17,7 @@ class CreateFacsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('uni_id');
-            $table->foreign('uni_id')->references('id')->on('unis');
+            $table->foreign('uni_id')->references('id')->on('unis')->onDelete('cascade');
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();
