@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             //my additions:
-            $table->unsignedInteger('type');
-            $table->unsignedInteger('status');
+            $table->unsignedInteger('type')->default(0);
+            $table->unsignedInteger('status')->default(0);
             $table->string('phone',30)->unique();
             $table->timestamps();
         });
