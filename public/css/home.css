@@ -1,0 +1,25 @@
+/* start header */
+body{background-image: url(../imgs/test.jpg);background-size: cover;background-attachment: fixed;}
+.row{height: 100%;margin: 0 !important;}
+.header .navbar {color:#fff; background: rgba(0, 2, 21, 0.8); overflow: hidden;}
+.header .navbar ul {list-style: none; margin-right: 0;
+margin-top: 2% ;margin-bottom: 1%}
+.header .navbar ul li {float:left; padding:10px ;}
+.header .navbar ul li a {text-decoration: none;}
+.header .navbar ul li a:hover {color:#F4AF0E !important;transition: all .3s ease-in-out}
+.header form {padding-right: 0;padding-left: 0;}
+/* end header*/
+
+/* add posts */
+.add{margin: 2%;margin-bottom: 0;font-size: 20px !important;font-weight: 800 !important;cursor: pointer}
+.addpost{margin-bottom:20px;display: none;}
+.addpost textarea {resize: none !important;}
+.addpost form {display: inline-flex !important;}
+/*add posts */
+.post{margin:4px;}
+.postdetails{margin:8px 3px;}
+.comment{margin-top: 10px !important;}
+.lin1,.lin{display: none}
+.posts{color: white;}
+/*footer*/
+.footer{color: White;text-align: center;font-weight: 500;background-color: rgba(0, 2, 21, 0.8);padding: 10px;}

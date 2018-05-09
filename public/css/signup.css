@@ -1,0 +1,19 @@
+body
+{color: #FFF !important;font-weight: 500 !important;
+background-image: url(../imgs/test.jpg);background-size: cover;background-attachment: fixed}
+/*img {height: 150px; width: 300px;display: block;margin: 20px auto !important;}*/
+form
+{margin: 30px;padding: 50px !important;background-color: rgba(28, 27, 26,0.9);border-radius: 15px !important;position: relative;
+height: 60%;}
+.form-group
+{margin-bottom: 40px !important}
+.incshgt
+{height: 40px !important;border-radius: 25px !important;border: none;}
+button
+{padding: 10px 100px !important;display: block !important;margin: 30px auto 5px  !important;cursor: pointer;
+font-weight: 500 !important;background-color: rgba(16, 9, 196, 0.7) !important;border: none !important}
+.Shit
+{
+    padding: 20px 20px 18px 20px!important;
+}
+hr {border-top:dashed 3px green !important;}

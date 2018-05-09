@@ -1,0 +1,33 @@
+/* start header */
+body{background-image: url(../imgs/test.jpg);background-size: cover;background-attachment: fixed}
+.row{height: 100%;margin: 0 !important;}
+.header .navbar {color:#fff; background: rgba(0, 2, 21, 0.8); overflow: hidden;}
+.header .navbar ul {list-style: none; margin-right: 0;
+margin-top: 2% ;margin-bottom: 1%}
+.header .navbar ul li {float:left; padding:10px ;}
+.header .navbar ul li a {text-decoration: none; color: #;}
+.header .navbar ul li a:hover {color:#F4AF0E !important;transition: all .3s ease-in-out}
+.header form {padding-right: 0;padding-left: 0;}
+/* end header*/
+
+/* add posts */
+.add{margin: 2%;margin-bottom: 0;font-size: 20px !important;font-weight: 800 !important;cursor: pointer;}
+.addpost{margin:10px 20px;display: none;}
+.addpost textarea {resize: none !important;}
+.addpost form {display: inline-flex !important;}
+/*add posts */
+
+.gpost{height: 100%;width: 45%;margin-top: 4%; margin-bottom: 2%;margin-left: 10%;}
+.post{margin:4px;}
+.itm{width: 50%;margin: 0 auto;text-align: center}
+.itm img {margin:auto}
+.postdetails{margin:8px 3px;}
+.posts{color: white;}
+.friendlist{background-color:rgba(9, 10, 10, 0.6);margin-top: 1%;margin-bottom:1%;margin-left: 1%;
+border-radius: 25px;overflow: auto;height: 600px}
+.friendlist a {float: left;margin-right: 3%}
+.friend {margin-top: 3%;margin-bottom:3%;padding:10px}
+.sug{margin-top: 8%}
+/*footer*/
+.footer{color: White;text-align: center;font-weight: 500;background-color: rgba(9, 10, 10, 0.6);padding: 10px;}
+hr {border-top:dashed 3px #EAE5E3 !important;}

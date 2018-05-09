@@ -1,0 +1,29 @@
+/* start header */
+body{background-image: url(../imgs/test.jpg);background-size: cover;background-attachment: fixed;
+color: #fff !important}
+.row{height: 100%;margin: 0 !important;}
+.header .navbar {color:#fff; background: rgba(0, 2, 21, 0.8); overflow: hidden;}
+.header .navbar ul {list-style: none; margin-right: 0;
+margin-top: 2% ;margin-bottom: 1%}
+.header .navbar ul li {float:left; padding:10px ;}
+.header .navbar ul li a {text-decoration: none; color: #;}
+.header .navbar ul li a:hover {color:#F4AF0E !important;transition: all .3s ease-in-out}
+.header form {padding-right: 0;padding-left: 0;}
+/* end header*/
+/*footer*/
+.footer{color: White;text-align: center;font-weight: 500;background-color: rgba(9, 10, 10, 0.6);padding: 10px;}
+/*end footer*/
+.interests{color: #fff !important}
+.test
+{margin: 30px;padding: 50px !important;background-color: rgba(28, 27, 26,0.9);border-radius: 15px !important;position: relative;
+height: 60%;}
+.form-group
+{margin-bottom: 40px !important}
+.incshgt
+{height: 40px !important;border-radius: 25px !important;border: none;}
+.sav
+{padding: 10px 100px !important;display: block !important;margin: 30px auto 5px  !important;cursor: pointer;
+font-weight: 500 !important;background-color: rgba(16, 9, 196, 0.7) !important;border: none !important}
+.koko
+{padding: 20px 20px 18px 20px!important;}
+hr {border-top:dashed 3px green !important;}

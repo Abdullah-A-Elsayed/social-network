@@ -1,0 +1,21 @@
+body{
+       font-weight: 500 !important;
+       background-image: url(../imgs/test.jpg);background-size: cover;background-attachment: fixed
+}
+.Shit
+{
+    margin-top: 14%;
+    padding: 30px;
+    background-color: rgba(28, 27, 26,0.9);
+    border-radius: 25px;
+    width: 50% !important;
+}
+.row{
+    margin: 20px 0 !important;
+}
+button
+{padding: 10px 30px !important;display: block !important;cursor: pointer;
+font-weight: 500 !important;background-color: rgba(16, 9, 196, 0.7) !important;border: none !important;
+position: relative;
+right: 10%;
+}
