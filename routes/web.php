@@ -20,7 +20,9 @@ Route::get('/', function () {
 Route::get('/welcme', function () {
     return view('welcme');
 });
-
+Route::get('/', function () {
+    return view('welcme');
+});
 Route::get('/signin', function () {
     return view('signin');
 });
@@ -38,3 +40,8 @@ Route::get('/friends','postController@all_friends');
 
 /* view routes */
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/user', 'UserController');

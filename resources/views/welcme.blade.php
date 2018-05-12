@@ -30,8 +30,8 @@
         <section class="intro"> 
             <h1 style="color: #F40602;font-size: 5em;margin-bottom:25px">Zipline</h1>
             <p style="color: #FFF9F9;font-size: 25px;font-weight: 400"> Egypt's First Social Network </p>
-            <a href="http://localhost/gasser_lara/public/signin">Sign In</a> <span>/</span>
-            <a href="http://localhost/gasser_lara/public/signup">Sign Up</a>
+            <a href="{{url('signin')}}">Sign In</a> <span>/</span>
+            <a href="{{url('signup')}}">Sign Up</a>
             <p class="num_users">
                 <span style="font-size: 50px;color: #FF8300;">5 </span> <!-- bring from database-->
                 <i class="fa fa-users fa-2x"></i></p>
