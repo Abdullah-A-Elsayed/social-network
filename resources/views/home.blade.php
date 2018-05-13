@@ -12,9 +12,10 @@
         <!-- add Post section -->
         <button class="btn btn-outline-success mt-sm-3 add">+</button>
         <div class="addpost container">
-            <form class="row col-md-8"  method="Post" action="home.html">
+            <form class="row col-md-8"  method="Post" action="{{url('PostAdd')}}">
                 <textarea resize autofocus style="height: 170px;margin-bottom: 2%" class="form-control"
-                    placeholder="Write your post" name="postcontent" ></textarea>
+                    placeholder="Write your post" name="body" ></textarea>
+                    {{csrf_field()}}
 				<button type="submit" class="btn btn-outline-success" style="cursor: pointer" name="post">Post</button>
             </form>
         </div>
@@ -30,53 +31,83 @@
               @foreach($all_posts as $post)
                 <div class="carousel-item">
                   <div class="row">
-                      <img src="imgs/{{$post->user_photo}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+
+                    @if(isset($post->user->image))
+
+                      <img src="{{url('')}}/{{$post->user->image}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+                      @else
+                      <img src="{{asset('uploads/default.jpg')}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+                      @endif
                         <div class="postdetails col-md-8">
-                          <h5>{{$post->user_name}}</h5>
-                          <a href="#"> View Profile </a>
+                          <h5>{{$post->user->name}}</h5>
+                          <a href="{{url('profile')}}/{{$post->user->id}}"> View Profile </a>
                        </div>
                   </div>
                   
                   <div class="row">
-                     <p style="margin: 10px;"> {{$post->content}}</p>
+                     <p style="margin: 10px;"> {{$post->body}}</p>
                   </div>
                   
                   <!-- buttons row -->
                  <div class="row">
-                    <button class="col-sm btn btn-primary my-2 mx-4" type="submit" name="like"> 
+                  @if(!$post->isLiked->count())
+     <form   method="Post" action="{{url('like')}}/{{$post->id}}" class="form-inline my-2 mx-4">
+{{csrf_field()}}
+                    <button class="col-sm btn btn-primary" type="submit" name="like"> 
                       <i class="fa fa-thumbs-up fa-1x" style="margin: 0 5px;color:  !important;"></i>
                       <span>Like</span>
                     </button>
+</form>
+                  @else
+
+     <form   method="Post" action="{{url('like')}}/{{$post->id}}" class="form-inline my-2 mx-4">
+      {{csrf_field()}}
+
+                    <button class="col-sm btn btn-primary " type="submit" name="like"> 
+                      <i class="fa fa-thumbs-down fa-1x" style="margin: 0 5px;color:  !important;"></i>
+                      <span>unlike</span>
+                    </button>  
+                    </form>      
+                  @endif
                     <button class="col-sm comnt1 btn btn-success my-2 mx-4" type="submit" name="comment">
                       <i class="fa fa-comment fa-1x" style="margin: 0 5px;"></i>
                       <span>Comment</span>
                     </button>
-                    <button class="col-sm btn btn-danger my-2 mx-4" type="submit" name="report">
+                    <button disabled class="col-sm btn btn-danger my-2 mx-4" type="submit" name="report">
                       <i class="fa fa-flag fa-1x" style="margin: 0 5px;"></i>
-                      <span>Report</span>
+                      <span> {{$post->likes->count()}} likes</span>
                     </button>
                   </div>
                   <!-- buttons row -->
+                  @foreach($post->comments as $comment)
 
                  <div class="comment row">
-                     <p><img src="imgs/{{$post->user_photo}}" class="rounded-circle" alt="profile pic" width="50" height="40">
-                     {{$post->com1}}</p>
-                     <p><img src="imgs/{{$post->user_photo}}" class="rounded-circle" alt="profile pic" width="50" height="40">
-                     {{$post->com2}}</p>
-                     <p><img src="imgs/{{$post->user_photo}}" class="rounded-circle" alt="profile pic" width="50" height="40">
-                     {{$post->com3}}</p>
+
+                     <p>
+@if(isset($comment->user->image))
+                      <img src="{{url('')}}/{{$comment->user->image}}" class="rounded-circle" alt="profile pic" width="50" height="40">
+
+@else
+                      <img src="{{url('')}}/uploads/default.jpg" class="rounded-circle" alt="profile pic" width="50" height="40">
+@endif                      {{$comment->user->name}}</p>
+
+
+
                   </div>
-                  
-                  <div class="lin1">
-                      <form class="form-inline row mb-3">
-                          <input type="hidden" name"_token" value="{{csrf_token()}}">
-                          <input autofocus class="form-control" style="width: 80%;" type="text" placeholder="Write your Comment" aria-label="Comment">
+                  {{$comment->body}}
+        @endforeach
+                       <div class="lin1">
+     <form   method="Post" action="{{url('addComment')}}/{{$post->id}}" class="form-inline row mb-3">
+                          {{csrf_field()}}
+                          <input autofocus class="form-control" style="width: 80%;" type="text" placeholder="Write your Comment" name="body" aria-label="Comment">
                           <button class="btn btn-outline-success ml-2" type="submit">OK</button>
                       </form>
                   </div>
+
                 </div>
+                                  
               @endforeach
-             
+
           </div>
         </div>
             <a class="crcont carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -96,57 +127,88 @@
             <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel" data-interval="false">
             <div class="carousel-inner">
 
-            @foreach($all_posts as $post)
+            @foreach($groupPosts as $post)
+                <div class="carousel-item">
+                  <div class="row">
 
-            <div class="carousel-item">
-                <div class="row">
-                    <img src="imgs/{{$post->user_photo}}" class="rounded-circle" alt="profile pic" width="90" height="75">
-                      <div class="postdetails col-md-8">
-                        <h5 style="display: inline-block;">{{$post->user_name}} </h5>
+                    @if(isset($post->user->image))
+
+                      <img src="{{url('')}}/{{$post->user->image}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+                      @else
+                      <img src="{{asset('uploads/default.jpg')}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+                      @endif
+
+                                             <div class="postdetails col-md-8">
+                        <h5 style="display: inline-block;">{{$post->user->name}} </h5>
                         <i class="fa fa-angle-double-right fa-1x" style="margin: 0 5px;font-size: 20px"></i> 
-                        <h5 style="display: inline-block;">Love and food</h5>
+                        <h5 style="display: inline-block;">{{$post->group->name}}</h5>
                         <a href="#" style="display: block;"> View Group </a>
                      </div>
-                </div>
-                
-                <div class="row">
-                   <p> {{$post->content}} </p>
-                </div>
+                  </div>
+                  
+                  <div class="row">
+                     <p style="margin: 10px;"> {{$post->body}}</p>
+                  </div>
+                  
+                  <!-- buttons row -->
+                 <div class="row">
+                  @if(!$post->isLiked->count())
+     <form   method="Post" action="{{url('like')}}/{{$post->id}}" class="form-inline my-2 mx-4">
+{{csrf_field()}}
+                    <button class="col-sm btn btn-primary" type="submit" name="like"> 
+                      <i class="fa fa-thumbs-up fa-1x" style="margin: 0 5px;color:  !important;"></i>
+                      <span>Like</span>
+                    </button>
+</form>
+                  @else
 
-                <!-- buttons row -->
-                <div class="row">
-                  <button class="col-sm btn btn-primary my-2 mx-4" type="submit" name="like"> 
-                    <i class="fa fa-thumbs-up fa-1x"></i>
-                    <span>Like</span>
-                  </button>
-                  <button class="col-sm comnt btn btn-success my-2 mx-4" type="submit" name="comment">
-                    <i class="fa fa-comment fa-1x"></i>
-                    <span>Comment</span>
-                  </button>
-                  <button class="col-sm btn btn-danger my-2 mx-4" type="submit" name="report">
-                    <i class="fa fa-flag fa-1x"></i>
-                     <span>Report</span>
-                  </button>
-                </div>
-                <!-- buttons row -->
+     <form   method="Post" action="{{url('like')}}/{{$post->id}}" class="form-inline my-2 mx-4">
+      {{csrf_field()}}
 
-                <div class="comment row">
-                   <p><img src="imgs/{{$post->user_photo}}" class="rounded-circle" alt="profile pic" width="50" height="40">
-                   {{$post->com1}}</p>
-                   <p><img src="imgs/{{$post->user_photo}}" class="rounded-circle" alt="profile pic" width="50" height="40">
-                   {{$post->com2}}</p>
-                   <p><img src="imgs/{{$post->user_photo}}" class="rounded-circle" alt="profile pic" width="50" height="40">
-                   {{$post->com3}}</p>
+                    <button class="col-sm btn btn-primary " type="submit" name="like"> 
+                      <i class="fa fa-thumbs-down fa-1x" style="margin: 0 5px;color:  !important;"></i>
+                      <span>unlike</span>
+                    </button>  
+                    </form>      
+                  @endif
+                    <button class="col-sm comnt1 btn btn-success my-2 mx-4" type="submit" name="comment">
+                      <i class="fa fa-comment fa-1x" style="margin: 0 5px;"></i>
+                      <span>Comment</span>
+                    </button>
+                    <button disabled class="col-sm btn btn-danger my-2 mx-4" type="submit" name="report">
+                      <i class="fa fa-flag fa-1x" style="margin: 0 5px;"></i>
+                      <span> {{$post->likes->count()}} likes</span>
+                    </button>
+                  </div>
+                  <!-- buttons row -->
+                  @foreach($post->comments as $comment)
+
+                 <div class="comment row">
+
+                     <p>
+@if(isset($comment->user->image))
+                      <img src="{{url('')}}/{{$comment->user->image}}" class="rounded-circle" alt="profile pic" width="50" height="40">
+
+@else
+                      <img src="{{url('')}}/uploads/default.jpg" class="rounded-circle" alt="profile pic" width="50" height="40">
+@endif                      {{$comment->user->name}}</p>
+
+
+
+                  </div>
+                  {{$comment->body}}
+        @endforeach
+                       <div class="lin1">
+     <form   method="Post" action="{{url('addComment')}}/{{$post->id}}" class="form-inline row mb-3">
+                          {{csrf_field()}}
+                          <input autofocus class="form-control" style="width: 80%;" type="text" placeholder="Write your Comment" name="body" aria-label="Comment">
+                          <button class="btn btn-outline-success ml-2" type="submit">OK</button>
+                      </form>
+                  </div>
+
                 </div>
-                
-                <div class="lin">
-                    <form class="form-inline row mb-3">
-                        <input autofocus class="form-control" style="width: 80%;" type="text" placeholder="Write your Comment" aria-label="Comment">
-                        <button class="btn btn-outline-success ml-2" type="submit">OK</button>
-                    </form>
-                </div>
-            </div>
-            @endforeach
+                                  
+              @endforeach
                 
             </div>
             </div>

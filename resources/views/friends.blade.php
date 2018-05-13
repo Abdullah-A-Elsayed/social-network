@@ -16,17 +16,30 @@
         <!-- My friends list-->
         <section class="friendlist col-md-5">
 
-          @foreach($all_friends as $friend)
+          @foreach($friends as $friend)
 
              <div class="friend container">
                 <div class="row">
-                    <img src="imgs/{{$friend->user_photo}}" class="rounded-circle" alt="profile pic" width="90" height="75">
-                      <div class="postdetails col-md-6">
-                        <h4>{{$friend->user_name}}</h4>
-                        <a href="#"> View Profile </a>
+              @if(!empty($friend->image))
+<img src="{{$friend->image}}" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                  >
+
+                      @else
+<img src="{{url('')}}/imgs/prof.jpg" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                   >
+
+              @endif                      <div class="postdetails col-md-6">
+                        <h4>{{$friend->name}}</h4>
+                        <a href="{{url('profile')}}/{{$friend->id}}"> View Profile </a><br>
+                        <span>{{$friend->mutual}} mutual friends </span>
                      </div>
-                      <a class="btn btn-md btn-danger" role="button" href="#"
-                         style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">Unfriend</a>
+                    <form   method="Post" action="{{url('unfriend')}}/{{$friend->id}}">
+{{csrf_field()}}
+                    <button class="btn btn-md btn-danger" role="button" href="#"
+                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;"  type="submit" name="Add Friend"> 
+                      <span>unfriend</span>
+                    </button>
+</form>
                 </div>
             </div>
 
@@ -40,22 +53,44 @@
             <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel" data-interval="false">
             <div class="carousel-inner">
                 
-                @foreach($all_friends as $friend)
+                @foreach($friendRequests as $friend)
 
                   <div class="carousel-item">
                       <div class="itm">
                           <div class="row">
-                                  <img src="imgs/{{$friend->user_photo}}" class="rounded-circle" alt="profile pic" width="90" height="75"
-                                  style="border: solid 1px green">
+
+
+              @if(!empty($friend->image))
+<img src="{{$friend->image}}" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                   >
+
+                      @else
+<img src="{{url('')}}/imgs/prof.jpg" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                   >
+
+              @endif
+                                  
                           </div>
                           <div class="postdetails">
-                                  <h4>{{$friend->user_name}}</h4>
-                                  <a href="#"> View Profile </a>
+                              <h4>{{$friend->name}}</h4>
+                              <a href="{{url('profile')}}/{{$friend->id}}"> View Profile </a><br>
+                              <span>{{$friend->mutual}} mutual friends </span>
                           </div>
-                          <a class="btn btn-md btn-success" role="button" href="#"
-                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">Accept</a>
-                          <a class="btn btn-md btn-danger" role="button" href="#"
-                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">Reject</a>
+                                              <form   style="display: inline-block;" method="Post" action="{{url('acceptFriend')}}/{{$friend->id}}" >
+{{csrf_field()}}
+                    <button class="btn btn-md btn-success" role="button" href="#"
+                               style="height: 38px;padding:8px 25px;margin-top: 20px;"  type="submit" name="Add Friend"> 
+                      Accept
+                    </button>
+</form>
+                    <form  style="display: inline-block;"  method="Post" action="{{url('rejectFriend')}}/{{$friend->id}}">
+{{csrf_field()}}
+                    <button class="btn btn-md btn-danger" role="button" href="#"
+                               style="height: 38px;padding:8px 25px;margin-top: 20px;"  type="submit" name="Add Friend"> 
+                      Reject
+                    </button>
+</form>
+                          
                       </div>
                   </div>
 
@@ -80,23 +115,33 @@
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false">
             <div class="carousel-inner">
                 
-                @foreach($all_friends as $friend)
+                @foreach($SuggestedFriends as $friend)
 
                   <div class="carousel-item">
                       <div class="itm">
                           <div class="row">
-                            <img src="imgs/{{$friend->user_photo}}" class="rounded-circle" alt="profile pic" width="90" height="75">
-                          </div>
+              @if(!empty($friend->image))
+<img src="{{$friend->image}}" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                   >
+
+                      @else
+<img src="{{url('')}}/imgs/prof.jpg" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                   >
+
+              @endif                          </div>
                           <div class="postdetails">
-                                  <h4>{{$friend->user_name}}</h4>
-                                  <a href="#"> View Profile </a>
+                              <h4>{{$friend->name}}</h4>
+                              <a href="{{url('profile')}}/{{$friend->id}}"> View Profile </a><br>
+                              <span>{{$friend->mutual}} mutual friends </span>
                           </div>
-                          <a class="btn btn-md btn-success" role="button" href="#"
-                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">
-                              Add Friend</a>
-                          <a class="btn btn-md btn-danger" role="button" href="#"
-                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">
-                              Remove</a>
+                 
+                    <form   method="Post" action="{{url('addFriend')}}/{{$friend->id}}" >
+{{csrf_field()}}
+                    <button class="btn btn-md btn-success" role="button" href="#"
+                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;"  type="submit" name="Add Friend"> 
+                      <span>Add Friend</span>
+                    </button>
+</form>
                       </div>
                   </div>
 

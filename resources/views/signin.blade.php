@@ -1,3 +1,6 @@
+@guest
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,19 +22,19 @@
     
     <body>
         <div>
-            <form class="container Shit" method="post" action="" >
-                
+            <form method="POST" class="container Shit" action="{{ route('login') }}">
+                {{csrf_field()}}
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" placeholder="Phone Number" name="Phone Number" required>
+                          <input type="email" class="form-control" placeholder="Email" name="email" required>
                         </div>
                     </div>
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
-                              <input type="password"  class="form-control" placeholder="Password" name="Password" required>
+                              <input type="password"  class="form-control" placeholder="Password" name="password" required>
                             </div>
                         </div>
                         <div class="row">
@@ -47,3 +50,14 @@
         </div>
     </body>
 </html>
+
+
+@endauth
+@auth
+
+
+<script type="text/javascript">
+    window.location = "{{ url('/home') }}";//here double curly bracket
+</script>
+
+@endauth

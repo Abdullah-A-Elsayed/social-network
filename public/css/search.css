@@ -1,0 +1,17 @@
+/* start header */
+body{background-image: url(../imgs/test2.jpg);background-size: cover;background-attachment: fixed;}
+.row{height: 100%;margin: 0 !important;}
+.header .navbar {color:#fff; background: rgba(0, 2, 21, 0.8); overflow: hidden;}
+.header .navbar ul {list-style: none; margin-right: 0;
+margin-top: 2% ;margin-bottom: 1%}
+.header .navbar ul li {float:left; padding:10px ;}
+.header .navbar ul li a {text-decoration: none;}
+.header .navbar ul li a:hover {color:#F4AF0E !important;transition: all .3s ease-in-out}
+.header form {padding-right: 0;padding-left: 0;}
+/* end header*/
+.footer{color: White;text-align: center;font-weight: 500;background-color: rgba(0, 2, 21, 0.8);padding: 10px;}
+/*footer*/
+.friendlist{background-color:rgba(9, 10, 10, 0.6);margin: 1% auto;border-radius: 25px;color: white}
+.friendlist a {float: left;margin-right: 3%;}
+.friend {margin: 3% auto;padding:10px 30px}
+.full{min-height: 480px;}

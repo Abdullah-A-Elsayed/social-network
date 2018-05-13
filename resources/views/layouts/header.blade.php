@@ -16,31 +16,41 @@
         @yield('css')
         <!-- CSS tags -->
     </head>
+<style type="text/css">
+  
+a {
+    color: #f8f9fa;}
 
+</style>
     <body>
        <header>
            <div class="header">
                <nav class="navbar row">
-                  <div class="col-lg">
-                    <img src="{{asset('imgs/prof1.jpg')}}" class="rounded-circle" alt="profile pic" width="140" height="110">
+                  <div class="col-lg-4 col-md-6">
+                    @if(isset(Auth::user()->image))
+                    <img src="{{url('')}}/{{Auth::user()->image}}" class="rounded-circle" alt="profile pic" width="140" height="110">
+                    @else
+
+                    <img src="{{asset('uploads/default.jpg')}}" class="rounded-circle" alt="profile pic" width="140" height="110">
+                    @endif
                     <div style="display: inline-block;margin-left:15px;position: absolute">
-                        <h3 style="margin-top: 25px">Gasser Samy</h3>
-                        <a href="profile.html"><i class="fa fa-user fa-sm"></i> View Profile </a>
+                        <h3 style="margin-top: 25px">{{Auth::user()->name}}</h3>
+                        <a href="{{url('myprofile')}}"><i class="fa fa-user fa-sm"></i> View Profile </a>
                     </div>
                  </div>
-                  
-                  <form class="form-inline search col-lg" style="margin-left: 0;margin-top: 5px">
-                    <input class="form-control mr-sm-2" type="search" style="width: 70% !important" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit" style="border: 0;">
-                        <i class="fa fa-search fa-2x fa-flip-horizontal"></i></button>
+                                      <form  class="form-inline search col-lg-5 col-md-6"  style="margin-left: 0;margin-top: 5px" method="get" action="{{url('search')}}" >
+                    <input class="form-control mr-sm-2" name="text" value="@if(isset($_GET['text'])){{$_GET['text']}} @endif" type="search" style="width: 70% !important" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" style="color: #f8f9fa" type="submit">
+                        <i class="fa fa-search fa-2x fa-flip-horizontal"></i> </button>
                   </form>
                   
-                    <ul class="col-lg">
-                      <li class="text-center"><a href="http://localhost/gasser_lara/public/home"><i class="fa fa-home fa-2x"></i><h6>Home</h6></a></li>
-                      <li class="text-center"><a href="http://localhost/gasser_lara/public/friends"><i class="fa fa-user-friends fa-2x"></i><h6>Friends</h6></a></li>
-                      <li class="text-center"><a href="http://localhost/gasser_lara/public/groups"><i class="fa fa-users fa-2x"></i><h6>Groups</h6></a></li>
-                      <li class="text-center"><a href="http://localhost/gasser_lara/public/messages"><i class="fa fa-envelope fa-2x"></i><h6>Messages</h6></a></li>
-                      <li class="text-center"><a href="http://localhost/gasser_lara/public/welcme"><i class="fa fa-sign-out-alt fa-2x"></i><h6>Sign Out</h6></a></li>
+                    <ul class="col-lg-3 col-md-6">
+                      <div class="row">
+                        <li class="text-center col-xsm"><a href="{{url('home')}}"><i class="fa fa-home fa-2x"></i><h6>Home</h6></a></li>
+                        <li class="text-center col-xsm"><a href="{{url('friends')}}"><i class="fa fa-user-friends fa-2x"></i><h6>Friends</h6></a></li>
+                        <li class="text-center col-xsm"><a href="{{url('groups')}}"><i class="fa fa-users fa-2x"></i><h6>Groups</h6></a></li>
+                        <li class="text-center col-xsm"><a href="{{ url('/logout') }}"><i class="fa fa-sign-out-alt fa-2x"></i><h6>Sign Out</h6></a></li>
+                      </div>
                     </ul>
                     
                </nav>

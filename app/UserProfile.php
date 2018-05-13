@@ -22,41 +22,7 @@ class UserProfile extends Model
      *
      * @var array
      */
-    
-         public function user()
- {
 
-     return $this->belongsTo('App\User', 'user_id', 'id');
-
- }
-
-   
-         public function country()
- {
-
-     return $this->belongsTo('App\Country');
-
- }
-         public function city()
- {
-
-     return $this->belongsTo('App\City');
-
- }
-
-         public function fac()
- {
-
-     return $this->belongsTo('App\Fac');
-
- }
-
-         public function uni()
- {
-
-     return $this->belongsTo('App\Uni');
-
- }
 
     protected $hidden = [
         'password', 'remember_token',

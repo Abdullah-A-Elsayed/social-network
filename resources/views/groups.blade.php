@@ -13,14 +13,16 @@
 <!-- create group section -->
             <button class="btn btn-outline-success mt-sm-3 add">+</button>
             <div class="addpost container">
-                <form class="row col-md-8" method="Post" action="home.html">
-                    <input autofocus type="text" name="gname" placeholder="Group name"
+                <form class="row col-md-8" enctype="multipart/form-data" method="Post" action="{{url('AddGroup')}}">
+
+                  {{csrf_field()}}
+                    <input autofocus type="text" name="name" placeholder="Group name"
                         class="form-control my-2" style="width: 50% !important">
-                    <textarea style="height: 80px;margin-bottom: 2%" class="form-control"
-                        placeholder="Group description" name="groupdesc" ></textarea>
+                    <textarea required name="description" style="height: 80px;margin-bottom: 2%" class="form-control"
+                        placeholder="Group description" ></textarea>
                     
                     <label style="color: #fff">Upload Group picture</label>
-                    <input type="file" name="gpic" class="form-control" style="color: #fff
+                    <input type="file" required name="image" class="form-control" style="color: #fff
                     ;background-color: transparent !important;border: none;margin-bottom: 10px !important;
                     padding-left: 0">
                     
@@ -39,15 +41,19 @@
 
               <div class="friend container">
                 <div class="row">
-                    <img src="imgs/{{$group->user_photo}}" class="rounded-circle" alt="profile pic" width="90" 
+                    <img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" 
                     height="75">
                       <div class="postdetails col-md-6">
-                        <h4>{{$group->user_name}}</h4>
-                        <a href="#"> Visit Group </a>
+                        <h4>{{$group->name}}</h4>
+                        <a href="{{url('')}}/{{$group->id}}"> Visit Group </a>
                      </div>
-                      <a class="btn btn-md btn-danger" role="button" href="#"
-                         style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">Leave</a>
-                </div>
+                    <form   method="Post" action="{{url('leavegroup')}}/{{$group->id}}">
+{{csrf_field()}}
+                    <button class="btn btn-md btn-danger" role="button" href="#"
+                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;"  type="submit" name="Add Friend"> 
+                      <span>Leave</span>
+                    </button>
+</form>                </div>
             </div>
 
             @endforeach                        
@@ -60,19 +66,24 @@
             <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel" data-interval="false">
             <div class="carousel-inner">
 
-                @foreach($all_groups as $group)
+                @foreach($userGroup as $group)
 
                   <div class="carousel-item">
                     <div class="itm">
                         <div class="row">
-                                <img src="imgs/{{$group->user_photo}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+                                <img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" height="75">
                         </div>
                         <div class="postdetails">
-                                <h4>{{$group->user_name}}</h4>
-                                <a href="#"> Visit Group </a>
+                                <h4>{{$group->name}}</h4>
+                                <a href="{{url('')}}/{{$group->id}}"> Visit Group </a>
                         </div>
-                        <a class="btn btn-md btn-danger" role="button" href="#"
-                             style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">Delete</a>
+                    <form   method="Post" action="{{url('deleteGroup')}}/{{$group->id}}">
+{{csrf_field()}}
+                    <button class="btn btn-md btn-danger" role="button" href="#"
+                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;"  type="submit" name="Add Friend"> 
+                      <span>Delete</span>
+                    </button>
+</form>
                     </div>
                 </div>
 
@@ -98,22 +109,23 @@
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false">
             <div class="carousel-inner">
                 
-                @foreach($all_groups as $group)
+                @foreach($SuggestedGroups as $group)
                   <div class="carousel-item">
                       <div class="itm">
                           <div class="row">
-                                  <img src="imgs/{{$group->user_photo}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+                                  <img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" height="75">
                           </div>
                           <div class="postdetails">
-                                  <h4>{{$group->user_name}}</h4>
-                                  <p style="color: #ffeb3b">{{$group->content}}</p>
+                                  <h4>{{$group->name}}</h4>
+                                <a href="{{url('')}}/{{$group->id}}"> Visit Group </a>
                           </div>
-                          <a class="btn btn-md btn-success" role="button" href="#"
-                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">
-                              Join Group</a>
-                          <a class="btn btn-md btn-danger" role="button" href="#"
-                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">
-                              Remove</a>
+                                             <form   method="Post" action="{{url('joinGroup')}}/{{$group->id}}">
+{{csrf_field()}}
+                    <button class="btn btn-md btn-success" role="button" href="#"
+                               style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;"  type="submit" name="Add Friend"> 
+                      <span>Join group</span>
+                    </button>
+</form>
                       </div>
                   </div>
                 @endforeach

@@ -6,11 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Company;
+use App\Posts;
 use App\Jobseeker;
 use Validator;
 use Illuminate\Support\Facades\Input ;
 use File;
 use App\UserProfile;
+use App\City;
+use App\Friend;
+use App\Country;
+use App\Interest;
 
 
 class UserController extends Controller
@@ -20,120 +25,144 @@ class UserController extends Controller
 
           
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     
-    public function emailcheck(Request $request){
-if(isset($request->user)){
-               $user=User::where("email",$request->email)->where("id","!=",$request->user)->count();
+public function emailcheck(Request $request){
 
-
-           }else if(isset($request->company)){
-
-            $Company=Company::find($request->company);
-
-               $user=User::where("email",$request->email)->where("id","!=",$Company['user_id'])->count();
-
-
-           }else if(isset($request->jobseeker)){
-            $Jobseeker=Jobseeker::find($request->jobseeker);
-               $user=User::where("email",$request->email)->where("id","!=",$Jobseeker['user_id'])->count();
-
-
-           }else{
 
 
                $user=User::where("email",$request->email)->count();
 
 
-           }
-if($user>0){
+                   if($user>0){
 
-    return response()->json('this email is already taken'); 
-}else{
+                return response()->json('this email is already taken'); 
+                }else{
 
 
-        return response()->json('true'); 
+                return response()->json('true'); 
 
-    }
+                }
  }
-    public function index()
-    {
-        $users = User::where('type',1)->get();
-    
-            
 
-        return response()->json($users);    
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+public function GetSignup(){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-           $validator = Validator::make($request->all(), [
-            'username' => 'required|max:255',
-            'password' => 'required|max:255',
-            'email' => 'required|max:255|email|unique:users',
-        ]);
-    if ($validator->fails()) {
+    $city=City::all();
+    $country=Country::all();
+    $interest=Interest::all();
 
-return 2;
 
-    }
-         $e = new User();
-         $request['status']=1;
-         $request['type']=1;
+    return view('signup')->with('city',$city)->with('interest',$interest)->with('country',$country) ;
+}
 
-         
-         $request['password'] = bcrypt($request['password']);
+public function PostSign(Request $request){
 
-         $e->fill($request->all());
-         $e->save();
-         return response()->json($e);
-    }
+                if (isset($request->interests)) {
+                        $interests =  implode(",",$request->interests);
+                        $request->merge(['interests' => $interests]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-$user = User::allInfo();
+                        }else {$request->merge(['interests' => 0]);}
+                /////////////////////////////////////////////////////////////////////////////////
 
-// $user['country'] = $user->profile->country['name'];
-// $user['city'] = $user->profile->city['name'];
-// $user['uni'] = $user->profile->uni['name'];
-// $user['fac'] = $user->profile->fac['name'];
-//dd($user);
-return  $user;
+                        if ($request->hasFile('image')) {
+                            $validator = Validator::make($request->all(), ['image' => 'mimes:jpeg,png,jpg,svg|max:10000', ]);
+                            if ($validator->fails()) {
 
-    }
- public function update(Request $request, $id)
+                        return redirect()->route('signup' , ['message'=> 'invalid image format only jpeg,png,jpg are allowed']);
+
+                            }
+                        }
+
+                        if (empty($request->image)) {
+                            $request->offsetUnset('image');}
+                //////////////////////////////////////////////////////////////////////////////////
+                        $all = $request->all();
+
+                        if ($request->hasFile('image')) {
+
+                            $image = Input::file('image');
+
+                            $destinationPath = public_path().'/uploads/';
+                            $filename        = str_random(6).'_'.$image->getClientOriginalName();
+
+                            Input::file('image')->move($destinationPath, $filename);
+
+                            $all['image'] = "uploads/".$filename;
+                        }
+
+                        $e2  = new User();
+                        $all['status']=1;
+                        $password=$all['password'];
+                        $all['password']=bcrypt($all['password']);
+                        $e2->fill($all);
+                        $e2->save();
+
+                        Auth::attempt(['email' => $all['email'], 'password' => $password]);
+
+                        return redirect()->route('home');
+
+
+
+                }
+
+public function ProfileInfo(){
+
+
+    $prof=User::find(Auth::user()->id);
+    $prof['interests']=explode(',',$prof['interests']);
+
+
+    $prof['interests']=Interest::whereIn('id',$prof['interests'])->pluck('name');
+
+$l=Country::find($prof['country']);
+if (isset($l->id)) {
+    $prof['country']=$l['name'];
+}
+$l=City::find($prof['city']);
+if (isset($l->id)) {
+    $prof['city']=$l['name'];
+}
+$groupPosts =Posts::with('user','comments','comments.user')->where("type",0)->where("user_id",Auth::user()->id)->get();
+    return view('myprofile')->with(['groupPosts'=>$groupPosts,'profile'=>$prof]);
+}
+public function profile($id){
+
+
+    $prof=User::find($id);
+
+    $prof['interests']=explode(',',$prof['interests']);
+
+
+    $prof['interests']=Interest::whereIn('id',$prof['interests'])->pluck('name');
+
+$l=Country::find($prof['country']);
+if (isset($l->id)) {
+    $prof['country']=$l['name'];
+}
+$l=City::find($prof['city']);
+if (isset($l->id)) {
+    $prof['city']=$l['name'];
+}
+
+ $u_id=Auth::user()->id;
+        $find=Friend::where(function($find) use ($id,$u_id)
+{
+    $find->where('user2_id',  $u_id);
+    $find->where('user1_id', $id);
+})->orWhere(function($find)  use ($id,$u_id)
+{
+    $find->where('user1_id',  $u_id);
+    $find->where('user2_id', $id);
+})->where('status',1)->get()->count();
+$groupPosts =Posts::with('user','comments','comments.user')->where("type",0)->where("user_id",$id)->get();
+    return view('generalProfile')->with(['groupPosts'=>$groupPosts,'profile'=>$prof,"id" =>$id,'find'=>$find]);
+}
+
+
+public function editprofile(Request $request, $id)
     {
 
    $validator = Validator::make($request->all(), [
-    'username' => 'required|max:255',
-    'password' => 'max:255',
     'email' => 'required|max:255|email|unique:users,email,'.$id,
 
 ]);
@@ -142,12 +171,13 @@ return  $user;
 return 2;
 
     }
-        $e = User::where('type',1)->where('id',$id)->get()->first();;
+        $e = User::where('id',Auth::user()->id)->get()->first();;
 
         if (empty($request['password'])) {
 
         $e->fill($request->all());
         $e->offsetUnset('password');
+                        return redirect()->back();
 
         }else{
 
@@ -159,37 +189,80 @@ return 2;
 
 
         $e->save();
-        return response()->json($e);
+                        return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+
+
+public function editprofile2(Request $request)
     {
-        $e = User::where('type',1)->where('id',$id)->get()->first();;
-       if($e->status==1){
-            $suspend['status']=0;
-        } else         $suspend['status']=1;
+                if (isset($request->interests)) {
+                        $interests =  implode(",",$request->interests);
+                        $request->merge(['interests' => $interests]);
 
-        $e->fill($suspend);
-            $e->save(); 
-               return response()->json($e);
+                        }else {$request->merge(['interests' => 0]);}
+                /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
 
+                        if ($request->hasFile('image')) {
+                            $validator = Validator::make($request->all(), ['image' => 'mimes:jpeg,png,jpg,svg|max:10000', ]);
+                            if ($validator->fails()) {
+
+                        return redirect()->route('signup' , ['message'=> 'invalid image format only jpeg,png,jpg are allowed']);
+
+                            }
+                        }
+
+                        if (empty($request->image)) {
+                            $request->offsetUnset('image');}
+                //////////////////////////////////////////////////////////////////////////////////
+                        $all = $request->all();
+
+                        if ($request->hasFile('image')) {
+
+                            $image = Input::file('image');
+
+                            $destinationPath = public_path().'/uploads/';
+                            $filename        = str_random(6).'_'.$image->getClientOriginalName();
+
+                            Input::file('image')->move($destinationPath, $filename);
+
+                            $all['image'] = "uploads/".$filename;
+                        }
+
+        $e = User::where('id',Auth::user()->id)->get()->first();;
+        if (empty($request['password'])) {
+
+        $e->fill($all);
+        $e->offsetUnset('password');
+
+        }else{
+
+        $request['password'] = bcrypt($request['password']);
+        $e->fill($all);
+
+        }
+
+
+
+        $e->save();
+        return redirect()->back();
     }
-    public function manageuserdelete($id)
+
+
+public function showeditprofile()
     {
 
+    $city=City::all();
+    $country=Country::all();
+    $interest=Interest::all();
 
-        $e = User::where('type',1)->where('id',$id)->get()->first();;
-             $e->delete();
+    return view('editProfile')->with('city',$city)->with('interest',$interest)->with('country',$country) ;
 
-      
+}
 
-    }
+
 
 
 

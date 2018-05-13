@@ -1,5 +1,5 @@
 /* start header */
-body{background-image: url(../imgs/test.jpg);background-size: cover;background-attachment: fixed;}
+body{background-image: url(../imgs/test2.jpg);background-size: cover;background-attachment: fixed;}
 .row{height: 100%;margin: 0 !important;}
 .header .navbar {color:#fff; background: rgba(0, 2, 21, 0.8); overflow: hidden;}
 .header .navbar ul {list-style: none; margin-right: 0;
@@ -20,6 +20,6 @@ margin-top: 2% ;margin-bottom: 1%}
 .postdetails{margin:8px 3px;}
 .comment{margin-top: 10px !important;}
 .lin1,.lin{display: none}
-.posts{color: white;}
+.posts{color: white;min-height: 400px;}
 /*footer*/
 .footer{color: White;text-align: center;font-weight: 500;background-color: rgba(0, 2, 21, 0.8);padding: 10px;}

@@ -1,3 +1,6 @@
+@guest
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,3 +43,12 @@
     </body>
 </html>
 </html>
+@endauth
+@auth
+
+
+<script type="text/javascript">
+    window.location = "{{ url('/home') }}";//here double curly bracket
+</script>
+
+@endauth
