@@ -41,8 +41,15 @@
 
               <div class="friend container">
                 <div class="row">
-                    <img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" 
-                    height="75">
+                 @if(!empty($group->image))
+<img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                  >
+
+                      @else
+<img src="{{url('')}}/imgs/test2.png" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                   >
+
+              @endif    
                       <div class="postdetails col-md-6">
                         <h4>{{$group->name}}</h4>
                         <a href="{{url('')}}/group/{{$group->id}}"> Visit Group </a>
@@ -71,7 +78,15 @@
                   <div class="carousel-item">
                     <div class="itm">
                         <div class="row">
-                                <img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+                               @if(!empty($group->image))
+<img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                  >
+
+                      @else
+<img src="{{url('')}}/imgs/test2.png" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                   >
+
+              @endif    
                         </div>
                         <div class="postdetails">
                                 <h4>{{$group->name}}</h4>
@@ -113,7 +128,15 @@
                   <div class="carousel-item">
                       <div class="itm">
                           <div class="row">
-                                  <img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" height="75">
+                                  @if(!empty($group->image))
+<img src="{{url('')}}/{{$group->image}}" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                  >
+
+                      @else
+<img src="{{url('')}}/imgs/test2.png" class="rounded-circle" alt="profile pic" width="90" height="75"
+                                   >
+
+              @endif    
                           </div>
                           <div class="postdetails">
                                   <h4>{{$group->name}}</h4>

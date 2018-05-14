@@ -100,14 +100,26 @@ public function city(){
 
                
      $related = new Collection();
-$x=$this->belongsToMany('App\User','user_user','user2_id','user1_id')->where('user_user.status',0)->get();
+    $x=$this->belongsToMany('App\User','user_user','user2_id','user1_id')->where('user_user.status',0)->get();
 
         $related = $related->merge($x);
      return   $related ;  
 
-    }
+}
+ public function friendRequests1(){
 
+    return $this->belongsToMany('App\User','user_user','user2_id','user1_id')->where('user_user.status',0);
+}
 
+ public function friendRequests2(){
+
+    return $this->belongsToMany('App\User','user_user','user1_id','user2_id')->where('user_user.status',0);
+}
+
+public function requests(){
+
+    return $this->friendRequests2->merge($this->friendRequests1);
+}
 
  public function mynotsuggestedfriends(){
 
@@ -170,7 +182,7 @@ public function friendStatus($id)//0->not any, 1->request, 2->friend;
         if($fr->id == $id) return 2;
     }
 
-    $myFr = $this->friendRequests();
+    $myFr = $this->requests();
     foreach ($myFr as $fr) {
         if($fr->id == $id) return 1;
     }
