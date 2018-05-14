@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Auth;
+use App\Friend;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -161,6 +162,20 @@ $collection = collect($y[$w]);
         }
         return $friends;
 }
-    
+
+public function friendStatus($id)//0->not any, 1->request, 2->friend;
+{
+    $myFr = $this->friends();
+    foreach ($myFr as $fr) {
+        if($fr->id == $id) return 2;
+    }
+
+    $myFr = $this->friendRequests();
+    foreach ($myFr as $fr) {
+        if($fr->id == $id) return 1;
+    }
+
+    return 0;
+}  
 
 }
