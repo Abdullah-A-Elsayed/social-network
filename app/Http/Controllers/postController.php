@@ -204,4 +204,12 @@ public function AddGroup(Request $request){
 
 }
 
+/* ------------------- new code ------------------- */
+
+    public function viewGroup($id)
+    {
+        $group = Group::where('id',$id)->first();
+        //return $group;
+        return view("grouptemp",['prof'=>$group]);
+    }
 }

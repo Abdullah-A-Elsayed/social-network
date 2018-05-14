@@ -45,7 +45,7 @@
                     height="75">
                       <div class="postdetails col-md-6">
                         <h4>{{$group->name}}</h4>
-                        <a href="{{url('')}}/{{$group->id}}"> Visit Group </a>
+                        <a href="{{url('')}}/group/{{$group->id}}"> Visit Group </a>
                      </div>
                     <form   method="Post" action="{{url('leavegroup')}}/{{$group->id}}">
 {{csrf_field()}}
@@ -75,7 +75,7 @@
                         </div>
                         <div class="postdetails">
                                 <h4>{{$group->name}}</h4>
-                                <a href="{{url('')}}/{{$group->id}}"> Visit Group </a>
+                                <a href="{{url('')}}/group/{{$group->id}}"> Visit Group </a>
                         </div>
                     <form   method="Post" action="{{url('deleteGroup')}}/{{$group->id}}">
 {{csrf_field()}}
@@ -117,7 +117,7 @@
                           </div>
                           <div class="postdetails">
                                   <h4>{{$group->name}}</h4>
-                                <a href="{{url('')}}/{{$group->id}}"> Visit Group </a>
+                                <a href="{{url('')}}/group/{{$group->id}}"> Visit Group </a>
                           </div>
                                              <form   method="Post" action="{{url('joinGroup')}}/{{$group->id}}">
 {{csrf_field()}}

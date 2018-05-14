@@ -29,11 +29,11 @@
 
               @endif   	                      <div class="postdetails col-md-6">
 	                        <h4>{{$users->name}}</h4>
-	                        <a href="{{url('profile')}}/{{$users->id}}"> View Profile </a><br>
+	                        <!-- <a href="{{url('profile')}}/{{$users->id}}"> View Profile </a><br> -->
 	                        <span>{{$users->mutual}} mutual friends </span>
 	                      </div>
-	                     <a class="btn btn-md btn-success" role="button" href="#"
-                         style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">Add friend</a>
+	                     <a class="btn btn-md btn-success" role="button" href="{{url('profile')}}/{{$users->id}}"
+                         style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">View Profile</a>
 
 	                </div>
 	            </div>
