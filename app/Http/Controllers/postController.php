@@ -142,14 +142,12 @@ return Redirect::back();
 }
 
 public function deleteGroup($id){
-$group=GroupUser::where('group_id',$id)->get();
-foreach ($group as $value) {
-
-    $value->delete();
-}
-
-
-return Redirect::back();
+    //memberShib
+    $group=GroupUser::where('group_id',$id)->first();
+    $group->delete();
+    $mgroup = Group::where('id',$id)->first();
+    $mgroup->delete();
+    return Redirect::back();
 
 }
 

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section ('title') <title>My Profile</title> @endsection
+@section ('title') <title>{{$profile->name}}</title> @endsection
 
 
 @section('css')

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section ('title') <title>Test Test</title> @endsection
+@section ('title') <title>{{$prof->name}}</title> @endsection
 
 
 @section('css')
