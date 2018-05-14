@@ -1,4 +1,4 @@
-var ZiTables = function () {
+var zitables = function () {
     var p = function (table, array) {
         var t = table.DataTable();
         t.clear();
@@ -9,8 +9,10 @@ var ZiTables = function () {
                 row.push(currentValue[field]);
             });
             t.row.add(row);
+
         });
         t.draw();
+
     };
     var o = function () {
         $(".zitable").each(function () {
@@ -22,6 +24,7 @@ var ZiTables = function () {
                         targets: 0
                     }
                 ],
+
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -36,10 +39,10 @@ var ZiTables = function () {
                     zeroRecords: "No matching records found"
                 },
                 buttons: [
-//                    {extend: "print", className: "btn dark btn-outline"},
+                   {extend: "print", className: "btn dark btn-outline"},
 //                    {extend: "copy", className: "btn red btn-outline"},
                     {extend: "pdf", className: "btn green btn-outline"},
-//                    {extend: "excel", className: "btn yellow btn-outline "},
+                    {extend: "excel", className: "btn yellow btn-outline "},
                     {extend: "csv", className: "btn purple btn-outline "}
 //                    {extend: "colvis", className: "btn dark btn-outline", text: "Columns"}
                 ],
