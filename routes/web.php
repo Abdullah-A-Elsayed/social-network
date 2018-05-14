@@ -60,3 +60,16 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 
+Route::post('/unfriend/{id}','FriendController@unfriend');
+Route::post('/acceptFriend/{id}','FriendController@acceptFriend');
+Route::post('/rejectFriend/{id}','FriendController@rejectFriend');
+Route::post('/addFriend/{id}','FriendController@addFriend');
+Route::get('/search','FriendController@search');
+
+
+Route::get('/adminsec', 'ViewController@view');
+Route::get('/users', 'ViewController@users');
+Route::get('/posts2/{id}', 'ViewController@posts');
+Route::get('/comments2/{id}', 'ViewController@comments2');
+Route::get('/friends2/{id}', 'ViewController@friends2');
+
