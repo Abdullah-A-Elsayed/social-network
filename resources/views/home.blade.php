@@ -79,10 +79,9 @@
                     </button>
                   </div>
                   <!-- buttons row -->
-                  @foreach($post->comments as $comment)
-
+                 
+ @foreach($post->comments as $comment)
                  <div class="comment row">
-
                      <p>
 @if(isset($comment->user->image))
                       <img src="{{url('')}}/{{$comment->user->image}}" class="rounded-circle" alt="profile pic" width="50" height="40">
@@ -142,7 +141,7 @@
                         <h5 style="display: inline-block;">{{$post->user->name}} </h5>
                         <i class="fa fa-angle-double-right fa-1x" style="margin: 0 5px;font-size: 20px"></i> 
                         <h5 style="display: inline-block;">{{$post->group->name}}</h5>
-                        <a href="#" style="display: block;"> View Group </a>
+                        <a href="{{url('')}}/group/{{$post->group->id}}" style="display: block;"> View Group </a>
                      </div>
                   </div>
                   

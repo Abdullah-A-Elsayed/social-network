@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section ('title') 
-<title> search results </title> 
+<title> Search results </title> 
 @endsection
 
 @section('css')
@@ -29,12 +29,24 @@
 
               @endif   	                      <div class="postdetails col-md-6">
 	                        <h4>{{$users->name}}</h4>
-	                        <a href="{{url('profile')}}/{{$users->id}}"> View Profile </a><br>
+	                        <!-- <a href="{{url('profile')}}/{{$users->id}}"> View Profile </a><br> -->
 	                        <span>{{$users->mutual}} mutual friends </span>
 	                      </div>
-	                     <a class="btn btn-md btn-success" role="button" href="#"
-                         style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">Add friend</a>
-
+    @if(Auth::user()->friendStatus($users->id) == 2)
+                 <a class="btn btn-md btn-outline-success" role="button" href="{{url('profile')}}/{{$users->id}}"
+                 style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">View Profile</a>
+     @elseif(Auth::user()->friendStatus($users->id) == 1)
+             <a class="btn btn-md btn-outline-warning" role="button" href="{{url('profile')}}/{{$users->id}}"
+             style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;">Pending - View</a>
+    @else
+              <form   method="Post" action="{{url('addFriend')}}/{{$users->id}}" >
+                {{csrf_field()}}
+                    <button class="btn btn-md btn-success" role="button" href="#"
+                       style="margin-right: 0px;height: 38px;padding:8px 25px;margin-top: 20px;"  type="submit" name="Add Friend"> 
+                    Add Friend
+                    </button>
+                </form>
+    @endif
 	                </div>
 	            </div>
 	        @endforeach

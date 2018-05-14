@@ -142,14 +142,12 @@ return Redirect::back();
 }
 
 public function deleteGroup($id){
-$group=GroupUser::where('group_id',$id)->get();
-foreach ($group as $value) {
-
-    $value->delete();
-}
-
-
-return Redirect::back();
+    //memberShib
+    $group=GroupUser::where('group_id',$id)->first();
+    $group->delete();
+    $mgroup = Group::where('id',$id)->first();
+    $mgroup->delete();
+    return Redirect::back();
 
 }
 
@@ -204,4 +202,12 @@ public function AddGroup(Request $request){
 
 }
 
+/* ------------------- new code ------------------- */
+
+    public function viewGroup($id)
+    {
+        $group = Group::where('id',$id)->first();
+        //return $group;
+        return view("grouptemp",['prof'=>$group]);
+    }
 }
