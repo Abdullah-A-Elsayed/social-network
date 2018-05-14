@@ -52,7 +52,6 @@
         <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <link src="assets/global/plugins/bootstrap-tagsinput-latest/src/bootstrap-tagsinput.css"></link>
     
-        <link rel="shortcut icon" href="assets/logos/logo2.png" />
 
 <style>
  body {
@@ -68,10 +67,7 @@
             <!-- BEGIN HEADER INNER -->
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
-                <div class="page-logo" style="background-color: white">
-                    <a href="/">
-                        <img src="assets/logos/logo.png" style="width:100%;height:60px;" alt="logo" class="logo-default" /></a>
-                </div>
+  
                 <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
                 <div class="page-top">
                     <div class="top-menu">
